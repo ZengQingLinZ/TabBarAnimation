@@ -40,36 +40,6 @@
 {
     _item = item;
     
-    // 清空监听的内容
-    [self observeValueForKeyPath:nil ofObject:nil change:nil context:nil];
-    
-    // 使用KVC模式监听UITabBarItem的值的变化
-    // 观察者：self(UITabBarButton)，只要UITabBarItem的值发生变化，就通知UITabBarButton修改相应控件的值
-    /**
-     *  给item添加观察者self
-     *
-     *  @param observer NSObject 观察者
-     *  @param keyPath NSString 要监听的属性的名称
-     *  @param options NSKeyValueObservingOptions 监听值变化的方式
-     *  @param context 上下文
-     */
-    [item addObserver:self forKeyPath:@"title"
-              options:NSKeyValueObservingOptionNew
-              context:nil];
-    [item addObserver:self forKeyPath:@"image"
-              options:NSKeyValueObservingOptionNew
-              context:nil];
-    [item addObserver:self forKeyPath:@"selectedImage"
-              options:NSKeyValueObservingOptionNew
-              context:nil];
-}
-
-// 只要监听到有属性有新值，就会调用该方法
-- (void)observeValueForKeyPath:(NSString *)keyPath
-                      ofObject:(id)object
-                        change:(NSDictionary<NSString *,id> *)change
-                       context:(void *)context
-{
     [self setTitle:_item.title forState:UIControlStateNormal];
     [self setImage:_item.image forState:UIControlStateNormal];
     [self setImage:_item.selectedImage forState:UIControlStateSelected];
